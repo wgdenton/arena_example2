@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YSA Interactive: Archive 2</title>
+    <link rel="stylesheet" href="style.css">    
+</head>
+<body>
+    <h1>Are.na Archive Example 2</h1>
+    <div id="arena-content"></div>
+
+    <script>
+        
+        fetch('https://api.are.na/v2/channels/archive-test-nwv2ynx780i')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Full data:', data);
+                console.log('Contents:', data.contents);
+                const contentDiv = document.getElementById('arena-content');
+                
+                let html = '';
+                
+                if (data.contents && data.contents.length > 0) {
+                    data.contents.forEach(block => {
+                        console.log('Block:', block);
+                        if (block.class === 'Image' && block.image) {
+                            html += `<img src="${block.image.large.url}" alt="${block.title || 'Image'}">`;
+                        }
+                    });
+                }
+                
+                contentDiv.innerHTML = html;
+            })
+
+    </script>
+
+</body>
+</html>
